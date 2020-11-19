@@ -14,25 +14,22 @@ provider:
     runtime: nodejs12.x
     stage: prod
     region: us-west-2
-    apiGateway:
-        shouldStartNameWithService: true
+    environment:
+        tableName: ${env:tableName}
 
-environment:
-    tableName: notes
-
-# 'iamRoleStatements' defines the permission policy for the Lambda function.
-# In this case Lambda functions are granted with permissions to access DynamoDB.
-iamRoleStatements:
-    - Effect: Allow
-      Action:
-          - dynamodb:Scan
-          - dynamodb:Query
-          - dynamodb:GetItem
-          - dynamodb:PutItem
-          - dynamodb:UpdateItem
-          - dynamodb:DeleteItem
-          - dynamodb:DescribeTable
-      Resource: "arn:aws:dynamodb:us-west-2:*:*"
+    # 'iamRoleStatements' defines the permission policy for the Lambda function.
+    # In this case Lambda functions are granted with permissions to access DynamoDB.
+    iamRoleStatements:
+        - Effect: Allow
+          Action:
+              - dynamodb:Scan
+              - dynamodb:Query
+              - dynamodb:GetItem
+              - dynamodb:PutItem
+              - dynamodb:UpdateItem
+              - dynamodb:DeleteItem
+              - dynamodb:DescribeTable
+          Resource: "arn:aws:dynamodb:us-west-2:*:*"
 
 functions:
     # Defines an HTTP API endpoint that calls the main function in create.js
